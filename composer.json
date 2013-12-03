@@ -1,0 +1,34 @@
+{
+    "name":"netzmacht/contao-template-extended",
+    "description":"Provides features like sections, inheritance and sub templates for Contao templates",
+    "keywords":["templates", "contao"],
+    "type":"contao-module",
+    "license":"LGPL-3.0+",
+    "authors":[
+        {
+            "name":"David Molineus",
+            "email":"mail@netzmacht.de",
+            "homepage":"http://www.netzmacht.de",
+            "role":"Project leader"
+        }
+    ],
+    "support":{
+        "email":"mail@netzmacht.de",
+        "issues":"https://github.com/netzmacht/contao-template-extended/issues",
+        "source":"https://github.com/netzmacht/contao-template-extended"
+    },
+    "require":{
+        "php":">=5.3",
+        "contao/core":"~3.1"
+    },
+    "autoload": {
+        "psr-0": { "TemplateExtended\\": "src/" }
+    },
+    "extra":{
+        "contao": {
+            "sources":{
+                "module": "system/modules/template-extended"
+            }
+        }
+    }
+}
