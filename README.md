@@ -18,7 +18,7 @@ Features
 ### Layouts
 
 Layouts allows you to define layouts which are used as an outer view of the current template. It works like the
-`[layout()](http://platesphp.com/layouts)` function of Plates.
+[`layout()`](http://platesphp.com/layouts) function of Plates.
 
 Instead of calling `layout()` directly you have to use `$this->__tpl->layout($name)` or for Contao 3.2 you can also use
 `$this->__layout($name)`. To access the unrelated data in the layout template use `this->__tpl->child()` or for Contao 3.2
@@ -63,7 +63,7 @@ There is also a third parameter provided, there you can disable the auto output.
 ?>
 ```
 
-** Main template
+** Main template**
 ```php
 <?php // fe_custom.html5
 
@@ -71,6 +71,17 @@ $this->insert('logo' array('title' => $this->logoTitle, 'href' => 'logoHref', 'l
 $link = $this->insert('link', array(), false);
 ?>
 ```
+
+### Reserved template vars
+
+TemplateExtended uses some template vars. So they are reserved and should not being used by other extensions/modules.
+
+* `__tpl` stores the current `TemplateExtended\Template`
+* `__start()` routes to `TemplateExtended\Template::start` (Contao 3.2 only)
+* `__end()` routes to `TemplateExtended\Template::end` (Contao 3.2 only)
+* `__layout()` routes to `TemplateExtended\Template::layout` (Contao 3.2 only)
+* `__insert()` routes to `TemplateExtended\Template::insert` (Contao 3.2 only)
+
 
 Install
 ----------
