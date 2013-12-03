@@ -63,8 +63,8 @@ class Engine
 				return $extended->child();
 			};
 
-			$template->__insert = function() use($extended) {
-				return $extended->child();
+			$template->__insert = function($name, $data=array(), $output=true) use($extended) {
+				return $extended->insert($name, $data, $output);
 			};
 		}
 	}
