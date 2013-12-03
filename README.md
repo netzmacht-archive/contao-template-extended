@@ -79,6 +79,7 @@ TemplateExtended uses some template vars. So they are reserved and should not be
 * `__tpl` stores the current `TemplateExtended\Template`
 * `__start()` routes to `TemplateExtended\Template::start` (Contao 3.2 only)
 * `__end()` routes to `TemplateExtended\Template::end` (Contao 3.2 only)
+* `__child()` routes to `TemplateExtended\Template::child` (Contao 3.2 only)
 * `__layout()` routes to `TemplateExtended\Template::layout` (Contao 3.2 only)
 * `__insert()` routes to `TemplateExtended\Template::insert` (Contao 3.2 only)
 
