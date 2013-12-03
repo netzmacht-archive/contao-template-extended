@@ -41,10 +41,6 @@ class Engine
 	{
 		$name = $template->getName();
 
-		if(!isset($this->templates[$name]) || $this->templates[$name] !== true) {
-			return;
-		}
-
 		$extended               = new Template($template);
 		$template->__tpl        = $extended;
 		$this->templates[$name] = $extended;
