@@ -22,7 +22,7 @@
         "contao/core":">=3.2,<3.3"
     },
     "autoload": {
-        "psr-0": { "Netzmacht\\TemplateExtended\\": "src/" }
+        "psr-0": { "TemplateExtended\\": "src/" }
     },
     "extra":{
         "contao": {
