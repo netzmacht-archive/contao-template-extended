@@ -87,7 +87,7 @@ class TemplateHelper
 
 		// Root template
 		if($this->parent === null) {
-			if (!isset($this->blockContents[$name])) {
+			if (!array_key_exists($name, $this->blockContents)) {
 				$this->blockContents[$name] = '[[TL_PARENT]]';
 			}
 			elseif (is_array($this->blockContents[$name])) {
@@ -179,6 +179,10 @@ class TemplateHelper
 		if(!$this->parent) {
 			$this->end = $buffer;
 
+			return $buffer;
+		}
+
+		if(!$buffer) {
 			return $buffer;
 		}
 
