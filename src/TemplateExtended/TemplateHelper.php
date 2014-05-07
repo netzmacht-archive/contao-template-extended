@@ -187,14 +187,11 @@ class TemplateHelper
 			return $buffer;
 		}
 
-		$template = $this->template;
-		$name     = $template->getName();
-
+		$template = clone $this->template;
 		$template->setName($this->parent);
-		$this->parent = null;
 
+		$this->parent = null;
 		$template->parse();
-		$template->setName($name);
 
 		return $this->end;
 	}
