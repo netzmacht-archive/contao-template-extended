@@ -151,6 +151,11 @@ class TemplateHelper
 		}
 		// Child template
 		else {
+			// prevent that it fails if other hook rendered an empty template
+			if(is_string($this->blockContents[$name])) {
+				$this->blockContents[$name] = array();
+			}
+
 			// Clean the output buffer
 			$this->blockContents[$name][] = ob_get_contents();
 			ob_end_clean();
@@ -179,10 +184,6 @@ class TemplateHelper
 		if(!$this->parent) {
 			$this->end = $buffer;
 
-			return $buffer;
-		}
-
-		if(!$buffer) {
 			return $buffer;
 		}
 
