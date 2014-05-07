@@ -15,6 +15,11 @@ class TemplateEngine
 	protected static $instance;
 
 	/**
+	 * @var bool
+	 */
+	protected static $hookEnabled = false;
+
+	/**
 	 * @var TemplateHelper[]|bool[]
 	 */
 	protected $templates = array();
@@ -39,6 +44,8 @@ class TemplateEngine
 	public function initialize(\Template $template)
 	{
 		if($this->isEnabledForTemplate($template->getName())) {
+			$this->enableHooks();
+
 			$this->templates[] = TemplateHelper::forTemplate($template);
 		}
 	}
@@ -92,6 +99,24 @@ class TemplateEngine
 			default:
 				return false;
 		}
+	}
+
+
+	/**
+	 * Enable parseBackend and FrontendTemplate Hook
+	 */
+	private function enableHooks()
+	{
+		if(static::$hookEnabled) {
+			return;
+		}
+
+		// injecting hooks as late as possible to ensure they will be called before other hooks so that they will get
+		// the parsed template
+		array_unshift($GLOBALS['TL_HOOKS']['parseFrontendTemplate'], array('TemplateExtended\TemplateEngine', 'parse'));
+		array_unshift($GLOBALS['TL_HOOKS']['parseBackendTemplate'], array('TemplateExtended\TemplateEngine', 'parse'));
+
+		static::$hookEnabled = true;
 	}
 
 }
