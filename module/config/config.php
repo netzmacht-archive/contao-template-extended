@@ -7,7 +7,7 @@ $GLOBALS['TL_HOOKS']['parseBackendTemplate'][]  = array('TemplateExtended\Templa
 
 
 // TemplateExtended inheritance can be enabled by template black or whitelist or gobal for every template
-$GLOBALS['TEMPLATE_INHERITANCE'] = \TemplateExtended\TemplateEngine::DISABLE_BY_BLACKLIST;
+$GLOBALS['TEMPLATE_INHERITANCE'] = 'blacklist';
 
 // copy black or whitelist for your template
 //$GLOBALS['TEMPLATE_INHERITANCE_WHITELIST'][] = 'fe_page';
