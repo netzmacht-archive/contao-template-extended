@@ -73,7 +73,7 @@ class TemplateEngine
 
 			case static::DISABLE_BY_BLACKLIST:
 				if(!isset($GLOBALS['TEMPLATE_INHERITANCE_BLACKLIST'])) {
-					return false;
+					return true;
 				}
 
 				return !in_array($name, (array) $GLOBALS['TEMPLATE_INHERITANCE_BLACKLIST']);
