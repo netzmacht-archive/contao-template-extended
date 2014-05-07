@@ -3,86 +3,27 @@ Extended Template features for Contao
 ==============
 
 This extension provides extended template features like using layouts, sections and partial templates without using any
-different template engine. This features are heavily inspired by [Plates](https://github.com/php-loep/Plates) which is
-inspired by [Twig](http://twig.sensiolabs.org/).
+different template engine. This extension was developed as a proof of concept to show how to implement this feature in
+Contao. After template inheritance will be introduced in Contao 3.3 it was refactored to backport template inheritance
+to Contao 3.2 using the same syntax as in Contao 3.2.
 
 Features
 ------------
 
-* Works with Contao frontend and backend templates
-* No need for another template language
-* Template layouts and inheritance
-* Template sections and subtemplates
+* Backports features explained [here](https://github.com/contao/core/issues/6508#issuecomment-41476802) to Contao 3.2
+* Add support for multiple template inheritance as proposed in [contao/core#6934](https://github.com/contao/core/pull/6934/)
+* Blacklist or whitelist configuration to decide in which template the feature can be used
+* The default behavior is to blacklist templates which should not have
 
+Known limitations
+----------
 
-### Layouts
+This extension uses the feature of callables introduced by [contao/core#6176](https://github.com/contao/core/commit/fcc44be87ed7d7f68769f9a4058248174f7d453e).
+That means that followings variable names are used. If your template uses this names for templates vars, there will be
+a conflict.
 
-Layouts allows you to define layouts which are used as an outer view of the current template. It works like the
-[`layout()`](http://platesphp.com/layouts) function of Plates.
-
-Instead of calling `layout()` directly you have to use `$this->__tpl->layout($name)` or for Contao 3.2 you can also use
-`$this->__layout($name)`. To access the unrelated data in the layout template use `this->__tpl->child()` or for Contao 3.2
-`this->__child()`
-
-```php
-<?php // fe_custom.html5
-
-$this->__tpl->layout('fe_page');
-$this->footer = 'Custom footer';
-
-?>
-```
-
-### Sections
-
-Sections allows you to render content and assign them to a variable. It works like the
-[sections](http://platesphp.com/sections) used by Plates. You have to use the alternate calls again:
-`$this->__tpl->start($name)` and `$this->__tpl->end()` or for Contao 3.2 `$this->__start($name)` and `$this->__end()`.
-
-```php
-<?php // fe_custom.html5 $this->__tpl->layout('fe_page'); ?>
-<?php $this->__tpl->start('footer'); ?>
-Custom footer
-<?php $this->__tpl->end(); ?>
-
-?>
-```
-
-### Nesting
-
-Last but not least the nesting feature of Plates is implemented as well. See the [documentation](http://platesphp.com/nesting)
-of Plates. The implemenation differs from Plates. The attributes of the current template are not passed to the nested
-one by default. You have to pass them by your own.
-
-There is also a third parameter provided, there you can disable the auto output. So you can assign the return to an var.
-
-**The template being inserted**
-```php
-<?php // logo.html5 ?>
-<a href="<?= $href; ?>" title="<?= $title; ?>"><?= $label; ?></a>
-?>
-```
-
-** Main template**
-```php
-<?php // fe_custom.html5
-
-$this->insert('logo' array('title' => $this->logoTitle, 'href' => 'logoHref', 'label' => \Image::getHtml($this->logoSrc)));
-$link = $this->insert('link', array(), false);
-?>
-```
-
-### Reserved template vars
-
-TemplateExtended uses some template vars. So they are reserved and should not being used by other extensions/modules.
-
-* `__tpl` stores the current `TemplateExtended\Template`
-* `__start()` routes to `TemplateExtended\Template::start` (Contao 3.2 only)
-* `__end()` routes to `TemplateExtended\Template::end` (Contao 3.2 only)
-* `__child()` routes to `TemplateExtended\Template::child` (Contao 3.2 only)
-* `__layout()` routes to `TemplateExtended\Template::layout` (Contao 3.2 only)
-* `__insert()` routes to `TemplateExtended\Template::insert` (Contao 3.2 only)
-
+* `block`, `endblock`, `insert`, `extend`, `parent` for provided methods
+* `__helper` for assigned template helper
 
 Install
 ----------
