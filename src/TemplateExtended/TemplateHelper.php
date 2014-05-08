@@ -181,19 +181,27 @@ class TemplateHelper
 	 */
 	public function parse($buffer)
 	{
+		$previous = $this->template->getName();
+
 		while($this->parent !== null) {
 			// use different templates depending on original one so that other extension will get the expected template
 			if($this->template instanceof \BackendTemplate) {
 				$template = new BackendTemplate($this->parent, $this, $this->template->getFormat());
 			}
-			else {
+			elseif($this->template instanceof \FrontendTemplate) {
 				$template = new FrontendTemplate($this->parent, $this, $this->template->getFormat());
 			}
+			// unkown template object, do not render parents
+			else {
+				break;
+			}
 
-			$template->setData($this->template->getData());
+			$loadDefault  = $this->parent == $previous;
+			$previous     = $this->parent;
 			$this->parent = null;
 
-			$buffer = $template->parse($this->parent == $this->template->getName());
+			$template->setData($this->template->getData());
+			$buffer = $template->parse($loadDefault);
 		}
 
 		return $buffer;

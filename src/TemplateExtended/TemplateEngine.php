@@ -67,6 +67,7 @@ class TemplateEngine
 		return $buffer;
 	}
 
+
 	/**
 	 * @param $name
 	 * @return bool
