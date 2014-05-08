@@ -59,8 +59,8 @@ class TemplateEngine
 	public function parse($buffer, $name)
 	{
 		if($this->isEnabledForTemplate($name)) {
-			$helper = array_pop($this->templates);
 			/** @var TemplateHelper $helper */
+			$helper = array_pop($this->templates);
 			$buffer = $helper->parse($buffer);
 		}
 

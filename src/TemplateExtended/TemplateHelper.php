@@ -31,7 +31,6 @@ class TemplateHelper
 	 */
 	private $blockContents = array();
 
-	private $end = '';
 
 	/**
 	 * @param $template
@@ -80,6 +79,7 @@ class TemplateHelper
 
 	/**
 	 * @param $name
+	 * @throws \Exception
 	 */
 	public function block($name)
 	{
@@ -167,7 +167,7 @@ class TemplateHelper
 
 
 	/**
-	 *
+	 * Insert parent content here
 	 */
 	public function parent()
 	{
@@ -181,19 +181,22 @@ class TemplateHelper
 	 */
 	public function parse($buffer)
 	{
-		if(!$this->parent) {
-			$this->end = $buffer;
+		while($this->parent !== null) {
+			// use different templates depending on original one so that other extension will get the expected template
+			if($this->template instanceof \BackendTemplate) {
+				$template = new BackendTemplate($this->parent, $this, $this->template->getFormat());
+			}
+			else {
+				$template = new FrontendTemplate($this->parent, $this, $this->template->getFormat());
+			}
 
-			return $buffer;
+			$template->setData($this->template->getData());
+			$this->parent = null;
+
+			$buffer = $template->parse($this->parent == $this->template->getName());
 		}
 
-		$template = clone $this->template;
-		$template->setName($this->parent);
-
-		$this->parent = null;
-		$template->parse();
-
-		return $this->end;
+		return $buffer;
 	}
 
 
