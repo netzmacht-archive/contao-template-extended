@@ -69,6 +69,23 @@ class TemplateHelper
 
 
 	/**
+	 * @return mixed
+	 */
+	public function getParent()
+	{
+		return $this->parent;
+	}
+
+	/**
+	 *
+	 */
+	public function clearParent()
+	{
+		$this->parent = null;
+	}
+
+
+	/**
 	 * @param $name
 	 */
 	public function extend($name)
@@ -190,6 +207,9 @@ class TemplateHelper
 			}
 			elseif($this->template instanceof \FrontendTemplate) {
 				$template = new FrontendTemplate($this->parent, $this, $this->template->getFormat());
+			}
+			elseif($this->template instanceof \Widget) {
+				$template = new FrontendTemplate($this->parent, $this, $this->template->format);
 			}
 			// unkown template object, do not render parents
 			else {
